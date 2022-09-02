@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 02:45:37 by raho              #+#    #+#             */
-/*   Updated: 2022/09/02 03:33:15 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/02 08:33:12 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,19 @@ static void	set_up_draw(t_draw *draw)
 static void	set_up_player(t_player *player)
 {
 	player->pos_angle = 0;
-	player->pos_x = 200;
-	player->pos_y = 350;
-	player->pos_dx = cos(player->pos_angle);
-	player->pos_dy = sin(player->pos_angle);
+	player->pos_x = 300;
+	player->pos_y = 300;
+	player->dir_x = cos(player->pos_angle) * 5;
+	player->dir_y = sin(player->pos_angle) * 5;
+	player->plane_x = 0;
+	player->plane_y = 0.66;
+	player->time = 0;
+	player->old_time = 0;
 	player->ray_cpoint_x = 0;
 	player->ray_cpoint_y = 0;
-	player->color = 0xFF0000;
+	player->color = LIGHT_PINK;
+	//player->pos_dx = cos(player->pos_angle) * 30;
+	//player->pos_dy = sin(player->pos_angle) * 30;
 }
 
 void	set_up_map(t_map *map)
@@ -61,8 +67,14 @@ void	set_up_map(t_map *map)
 
 void	set_up_structs(t_mlx *mlx)
 {
-	set_up_mlx(mlx);
+	static int	restart = 0;
+
+	if (restart == 0)
+	{
+		set_up_mlx(mlx);
+		set_up_map(&mlx->map);
+		set_up_draw(&mlx->draw);
+		restart = 1;
+	}
 	set_up_player(&mlx->player);
-	set_up_map(&mlx->map);
-	set_up_draw(&mlx->draw);
 }

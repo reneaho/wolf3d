@@ -6,16 +6,16 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:57:27 by raho              #+#    #+#             */
-/*   Updated: 2022/09/02 06:32:08 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/02 08:51:42 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
 # define READ_BUFF 500
-# define WINDOW_SIZE_WIDTH 1010
-# define WINDOW_SIZE_HEIGHT 1010
-# define SQUARE_SIZE 100
+# define WINDOW_SIZE_WIDTH 1024
+# define WINDOW_SIZE_HEIGHT 512
+# define SQUARE_SIZE 64
 /* # define SQUARE_HEIGHT */
 # define DEGREE	0.0174533 // one degree in radians
 # define LINUX_W 119
@@ -46,6 +46,7 @@
 # define LIGHT_GREEN 0x7DCFB6
 # define LIGHT_ORANGE 0xF79256
 # define LIGHT_PINK 0xFFBAD2
+# define RED 0xFF0000;
 
 # include "libft/libft.h"
 # include "mlx.h"
@@ -93,12 +94,23 @@ typedef struct s_player
 	double	pos_angle;
 	double	pos_x;
 	double	pos_y;
-	double	pos_dx;
-	double	pos_dy;
+	double	dir_x;
+	double	dir_y;
+	double	camera_x;
+	double	ray_angle;
+	double	ray_x;
+	double	ray_y;
+	double	offset_x;
+	double	offset_y;
+	double	plane_x;
+	double	plane_y;
+	double	time;
+	double	old_time;
 	double	collpoint_distance;
 	double	collpoint_record;
 	double	ray_cpoint_x;
 	double	ray_cpoint_y;
+	double	depth_of_field;
 	int		color;
 }		t_player;
 
@@ -136,9 +148,11 @@ void	draw_line(t_draw *draw, t_img *img);
 
 int		render_all(void *param);
 
-void	render_player(t_player *player, t_draw *draw, t_img *img);
+void	render_player(t_player *player, t_draw *draw, t_img *img, t_map *map);
 
 void	render_map(t_mlx *mlx);
+
+void	cast_rays(t_player *player, t_map *map);
 
 void	image_pixel_put(t_draw *draw, t_img *img);
 

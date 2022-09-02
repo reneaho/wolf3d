@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:02:28 by raho              #+#    #+#             */
-/*   Updated: 2022/09/02 06:25:48 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/02 08:40:05 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,26 @@ int	key_press(int key, void *param)
 		mlx->player.pos_angle -= 0.1;
 		if (mlx->player.pos_angle < 0)
 			mlx->player.pos_angle += 2 * M_PI;
-		mlx->player.pos_dx = cos(mlx->player.pos_angle) * 30;
-		mlx->player.pos_dy = sin(mlx->player.pos_angle) * 30;
+		mlx->player.dir_x = cos(mlx->player.pos_angle) * 5;
+		mlx->player.dir_y = sin(mlx->player.pos_angle) * 5;
 	}
 	if (key == MAC_D && mlx->mouse == 1)
 	{
 		mlx->player.pos_angle += 0.1;
-		if (mlx->player.pos_angle < (2 * M_PI))
+		if (mlx->player.pos_angle > (2 * M_PI))
 			mlx->player.pos_angle -= 2 * M_PI;
-		mlx->player.pos_dx = cos(mlx->player.pos_angle) * 30;
-		mlx->player.pos_dy = sin(mlx->player.pos_angle) * 30;
+		mlx->player.dir_x = cos(mlx->player.pos_angle) * 5;
+		mlx->player.dir_y = sin(mlx->player.pos_angle) * 5;
 	}	
 	if (key == MAC_W)
 	{
-		mlx->player.pos_x += mlx->player.pos_dx;
-		mlx->player.pos_y += mlx->player.pos_dy;
+		mlx->player.pos_x += mlx->player.dir_x;
+		mlx->player.pos_y += mlx->player.dir_y;
 	}	
 	if (key == MAC_S)
 	{
-		mlx->player.pos_x -= mlx->player.pos_dx;
-		mlx->player.pos_y -= mlx->player.pos_dy;
+		mlx->player.pos_x -= mlx->player.dir_x;
+		mlx->player.pos_y -= mlx->player.dir_y;
 	}
 	if (key == LINUX_ESC || key == MAC_ESC)
 		close_program(mlx);
@@ -70,7 +70,7 @@ int	render_all(void *param)
 	mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
 	erase_img(&mlx->img);
 	render_map(mlx);
-	render_player(&mlx->player, &mlx->draw, &mlx->img);
+	render_player(&mlx->player, &mlx->draw, &mlx->img, &mlx->map);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, \
 											mlx->img.img_ptr, 0, 0);
 	return (0);
@@ -102,8 +102,8 @@ int	mouse_hover(int x, int y, void *param)
 	if ((x >= 0 && x < WINDOW_SIZE_WIDTH) && (y >= 0 && y < WINDOW_SIZE_HEIGHT) \
 		&& mlx->mouse == 0)
 	{
-		mlx->player.pos_dx = x - mlx->player.pos_x;
-		mlx->player.pos_dy = y - mlx->player.pos_y;
+		mlx->player.dir_x = x - mlx->player.pos_x;
+		mlx->player.dir_y = y - mlx->player.pos_y;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 21:45:41 by raho              #+#    #+#             */
-/*   Updated: 2022/09/02 06:22:10 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/02 07:13:46 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ void	print_map_matrix(t_map *map)
 	}
 }
 
+
+
 void	start(t_mlx *mlx)
 {
+	set_up_structs(mlx);
 	mlx->img.img_ptr = mlx_new_image(mlx->mlx_ptr, \
 					WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT);
 	mlx->img.img_addr = mlx_get_data_addr(mlx->img.img_ptr, \
 						&mlx->img.bits_per_pixel, \
 						&mlx->img.size_line, &mlx->img.endian);
-	print_map_matrix(&mlx->map);
 }
 
 int	main(int argc, char *argv[])
@@ -47,10 +49,8 @@ int	main(int argc, char *argv[])
 
 	if (argc == 2)
 	{
-		set_up_structs(&mlx);
-		set_up_structs(&mlx);
-		save_map(argv[1], &mlx.map);
 		start(&mlx);
+		save_map(argv[1], &mlx.map);
 		mlx_hook(mlx.win_ptr, 2, 1L << 0, key_press, (void *)&mlx);
 		mlx_hook(mlx.win_ptr, 4, 1L << 2, mouse_click, (void *)&mlx);
 		mlx_hook(mlx.win_ptr, 6, 1L << 6, mouse_hover, (void *)&mlx);

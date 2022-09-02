@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 06:06:16 by raho              #+#    #+#             */
-/*   Updated: 2022/09/02 06:24:36 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/02 08:31:32 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,13 @@ void	render_map(t_mlx *mlx)
 	}
 }
 
-void	render_player(t_player *player, t_draw *draw, t_img *img)
+void	render_player(t_player *player, t_draw *draw, t_img *img, t_map *map)
 {
 	draw->color = player->color;
 	draw->x1 = player->pos_x;
 	draw->y1 = player->pos_y;
-	draw->x2 = player->pos_x + player->pos_dx;
-	draw->y2 = player->pos_y + player->pos_dy;
+	draw->x2 = player->pos_x + player->dir_x * 5;
+	draw->y2 = player->pos_y + player->dir_y * 5;
 	draw_line(draw, img);
+	cast_rays(player, map);
 }

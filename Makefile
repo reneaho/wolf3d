@@ -6,9 +6,12 @@
 #    By: raho <raho@student.hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/21 18:17:08 by raho              #+#    #+#              #
-#    Updated: 2022/08/21 19:58:28 by raho             ###   ########.fr        #
+#    Updated: 2022/09/02 06:15:30 by raho             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# Add dependancy for header file - if header is modified, rebuild .o files. #
+# Same for Makefile changes #
 
 NAME = wolf3d
 CC = gcc
@@ -17,9 +20,10 @@ LIB = libft/libft.a
 LIBFTINCL = libft/
 MLXLIB = /usr/local/lib
 MLXINCL = /usr/local/include
-INCL = ./
-SRCS = main.c hooks.c open_close_map.c free_mallocs.c initialize_struct.c \
-		draw_line.c pixel_handling.c scaling_functions.c
+INCL = wolf3d.h
+SRCS = main.c hooks.c open_close_map.c free_mallocs.c set_up_structs.c \
+		draw_line.c pixel_handling.c scaling_functions.c handle_map_file.c \
+		render.c
 OBJS = $(SRCS:.c=.o)
 MLXLINK = -lmlx -framework OpenGL -framework Appkit
 

@@ -6,17 +6,18 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:57:27 by raho              #+#    #+#             */
-/*   Updated: 2022/08/24 19:55:23 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/02 06:32:08 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
 # define READ_BUFF 500
-# define WINDOW_SIZE_WIDTH 1000
-# define WINDOW_SIZE_HEIGHT 1000
-/* # define SQUARE_WIDTH */
+# define WINDOW_SIZE_WIDTH 1010
+# define WINDOW_SIZE_HEIGHT 1010
+# define SQUARE_SIZE 100
 /* # define SQUARE_HEIGHT */
+# define DEGREE	0.0174533 // one degree in radians
 # define LINUX_W 119
 # define LINUX_A 97
 # define LINUX_S 115
@@ -41,6 +42,10 @@
 # define MAC_ESC 53
 # define MAC_MOUSE_LEFT_CLICK 1
 # define MAC_MOUSE_RIGHT_CLICK 2
+# define LIGHT_BLUE 0x00B2CA
+# define LIGHT_GREEN 0x7DCFB6
+# define LIGHT_ORANGE 0xF79256
+# define LIGHT_PINK 0xFFBAD2
 
 # include "libft/libft.h"
 # include "mlx.h"
@@ -74,9 +79,12 @@ typedef struct s_wall
 
 typedef struct s_map
 {
-	int	**matrix;
-	int	width;
-	int	height;
+	int		**matrix;
+	int		width;
+	int		width_counter;
+	int		height;
+	int		wall_w;
+	int		wall_h;
 	t_wall	wall[4];
 }		t_map;
 
@@ -94,49 +102,47 @@ typedef struct s_player
 	int		color;
 }		t_player;
 
-typedef struct s_image
+typedef struct s_img
 {
 	void		*img_ptr;
 	char		*img_addr;
 	int			bits_per_pixel;
 	int			size_line;
 	int			endian;
-}		t_image;
+}		t_img;
 
 typedef struct s_mlx
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	int			mouse;
-	t_image		img;
+	t_img		img;
 	t_map		map;
 	t_draw		draw;
 	t_player	player;
 }		t_mlx;
 
-void	initialize_struct(t_mlx *mlx);
-
-void	reinitialize_struct(t_mlx *mlx);
+void	set_up_structs(t_mlx *mlx);
 
 int		open_map(char *filename);
 
 void	close_map(int fd, t_map *map);
 
+void	save_map(char *filename, t_map *map);
+
 void	start(t_mlx *mlx);
 
-void	draw_line(t_mlx *mlx);
+void	draw_line(t_draw *draw, t_img *img);
 
-int		check_if_inside(int x, int y);
+int		render_all(void *param);
 
-void	erase_map(t_mlx *mlx);
-
-void	render_all(t_mlx *mlx);
-
-void	render_player(t_mlx *mlx);
+void	render_player(t_player *player, t_draw *draw, t_img *img);
 
 void	render_map(t_mlx *mlx);
 
-void	image_pixel_put(int color, int x, int y, t_mlx *mlx);
+void	image_pixel_put(t_draw *draw, t_img *img);
+
+void	erase_img(t_img *img);
 
 int		key_press(int key, void *param);
 
@@ -144,12 +150,10 @@ int		mouse_click(int mouse_button, int x, int y, void *param);
 
 int		mouse_hover(int x, int y, void *param);
 
-void    free_matrix(int height, t_map *map);
+void	free_matrix(int height, t_map *map);
 
 double	scale_value_x(int x, double newmin, double newmax);
 
 double	scale_value_y(int y, double newmin, double newmax);
-
-//double	map_color(int iterations);
 
 #endif

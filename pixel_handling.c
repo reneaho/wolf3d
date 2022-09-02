@@ -6,33 +6,30 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:25:14 by raho              #+#    #+#             */
-/*   Updated: 2022/08/21 16:53:55 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/02 06:34:15 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	image_pixel_put(int color, int x, int y, t_mlx *mlx)
+void	image_pixel_put(t_draw *draw, t_img *img)
 {
 	char	*pixel;
 
-	pixel = mlx->img.img_addr + ((y * mlx->img.size_line) + (x * \
-								(mlx->img.bits_per_pixel / 8)));
-	*(int *)pixel = color;
+	if ((draw->x >= 0 && draw->x < WINDOW_SIZE_WIDTH) && \
+		(draw->y >= 0 && draw->y < WINDOW_SIZE_HEIGHT))
+	{
+		pixel = img->img_addr + (((int)draw->y * img->size_line) + \
+									((int)draw->x * (img->bits_per_pixel / 8)));
+		*(int *)pixel = draw->color;
+	}
 }
 
-int	check_if_inside(int x, int y)
+void	erase_img(t_img *img)
 {
-	if ((x >= 0 && x < WINDOW_SIZE_WIDTH) && (y >= 0 && y < WINDOW_SIZE_HEIGHT))
-		return (1);
-	else
-		return (0);
-}
-
-void	erase_map(t_mlx *mlx)
-{
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	char	*pixel;
 
 	y = 0;
 	while (y < WINDOW_SIZE_HEIGHT)
@@ -40,7 +37,9 @@ void	erase_map(t_mlx *mlx)
 		x = 0;
 		while (x < WINDOW_SIZE_WIDTH)
 		{
-			image_pixel_put(0, x, y, mlx);
+			pixel = img->img_addr + (y * img->size_line) + \
+						(x * (img->bits_per_pixel / 8));
+			*(int *)pixel = 0;
 			x++;
 		}
 		y++;

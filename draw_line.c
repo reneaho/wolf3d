@@ -6,98 +6,96 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:05:05 by raho              #+#    #+#             */
-/*   Updated: 2022/08/21 16:38:10 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/02 06:21:48 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-static void	positive_negative_undefined_slope_2(t_mlx *mlx)
+static void	positive_negative_undefined_slope_2(t_draw *draw)
 {
-	if (mlx->draw.slope < 1 && mlx->draw.y1 < mlx->draw.y2)
-		mlx->draw.y = mlx->draw.y + 1;
+	if (draw->slope < 1 && draw->y1 < draw->y2)
+		draw->y = draw->y + 1;
 	else
-		mlx->draw.y = mlx->draw.y - 1;
-	mlx->draw.parametric_value = mlx->draw.parametric_value + 2 * \
-							mlx->draw.deltay - 2 * mlx->draw.deltax;
+		draw->y = draw->y - 1;
+	draw->parametric_value = draw->parametric_value + 2 * \
+							draw->deltay - 2 * draw->deltax;
 }
 
-static void	positive_negative_undefined_slope_1(t_mlx *mlx)
+static void	positive_negative_undefined_slope_1(t_draw *draw, t_img *img)
 {
-	if (mlx->draw.x1 > mlx->draw.x2)
+	if (draw->x1 > draw->x2)
 	{
-		mlx->draw.temp = mlx->draw.x1;
-		mlx->draw.x1 = mlx->draw.x2;
-		mlx->draw.x2 = mlx->draw.temp;
-		mlx->draw.temp = mlx->draw.y1;
-		mlx->draw.y1 = mlx->draw.y2;
-		mlx->draw.y2 = mlx->draw.temp;
+		draw->temp = draw->x1;
+		draw->x1 = draw->x2;
+		draw->x2 = draw->temp;
+		draw->temp = draw->y1;
+		draw->y1 = draw->y2;
+		draw->y2 = draw->temp;
 	}
-	mlx->draw.deltax = ft_fabs(mlx->draw.x2 - mlx->draw.x1);
-	mlx->draw.deltay = ft_fabs(mlx->draw.y2 - mlx->draw.y1);
-	mlx->draw.parametric_value = 2 * mlx->draw.deltay - mlx->draw.deltax;
-	mlx->draw.x = mlx->draw.x1;
-	mlx->draw.y = mlx->draw.y1;
-	while (mlx->draw.x <= mlx->draw.x2)
+	draw->deltax = ft_fabs(draw->x2 - draw->x1);
+	draw->deltay = ft_fabs(draw->y2 - draw->y1);
+	draw->parametric_value = 2 * draw->deltay - draw->deltax;
+	draw->x = draw->x1;
+	draw->y = draw->y1;
+	while (draw->x <= draw->x2)
 	{
-		if (check_if_inside(mlx->draw.x, mlx->draw.y))
-			image_pixel_put(mlx->draw.color, (int)mlx->draw.x, (int)mlx->draw.y, mlx);
-		mlx->draw.x = mlx->draw.x + 1;
-		if (mlx->draw.parametric_value >= 0)
-			positive_negative_undefined_slope_2(mlx);
+		image_pixel_put(draw, img);
+		draw->x = draw->x + 1;
+		if (draw->parametric_value >= 0)
+			positive_negative_undefined_slope_2(draw);
 		else
-			mlx->draw.parametric_value = mlx->draw.parametric_value + 2 * mlx->draw.deltay;
+			draw->parametric_value = draw->parametric_value + 2 * draw->deltay;
 	}
 }
 
-static void	negative_slope_2(t_mlx *mlx)
+static void	negative_slope_2(t_draw *draw)
 {
-	if (mlx->draw.slope >= 1)
-		mlx->draw.x = mlx->draw.x + 1;
+	if (draw->slope >= 1)
+		draw->x = draw->x + 1;
 	else
-		mlx->draw.x = mlx->draw.x - 1;
-	mlx->draw.parametric_value = mlx->draw.parametric_value + 2 * \
-							mlx->draw.deltax - 2 * mlx->draw.deltay;
+		draw->x = draw->x - 1;
+	draw->parametric_value = draw->parametric_value + 2 * \
+							draw->deltax - 2 * draw->deltay;
 }
 
-static void	negative_slope_1(t_mlx *mlx)
+static void	negative_slope_1(t_draw *draw, t_img *img)
 {
-	if (mlx->draw.y1 > mlx->draw.y2)
+	if (draw->y1 > draw->y2)
 	{
-		mlx->draw.temp = mlx->draw.x1;
-		mlx->draw.x1 = mlx->draw.x2;
-		mlx->draw.x2 = mlx->draw.temp;
-		mlx->draw.temp = mlx->draw.y1;
-		mlx->draw.y1 = mlx->draw.y2;
-		mlx->draw.y2 = mlx->draw.temp;
+		draw->temp = draw->x1;
+		draw->x1 = draw->x2;
+		draw->x2 = draw->temp;
+		draw->temp = draw->y1;
+		draw->y1 = draw->y2;
+		draw->y2 = draw->temp;
 	}
-	mlx->draw.deltax = ft_fabs(mlx->draw.x2 - mlx->draw.x1);
-	mlx->draw.deltay = ft_fabs(mlx->draw.y2 - mlx->draw.y1);
-	mlx->draw.parametric_value = 2 * mlx->draw.deltax - mlx->draw.deltay;
-	mlx->draw.x = mlx->draw.x1;
-	mlx->draw.y = mlx->draw.y1;
-	while (mlx->draw.y <= mlx->draw.y2)
+	draw->deltax = ft_fabs(draw->x2 - draw->x1);
+	draw->deltay = ft_fabs(draw->y2 - draw->y1);
+	draw->parametric_value = 2 * draw->deltax - draw->deltay;
+	draw->x = draw->x1;
+	draw->y = draw->y1;
+	while (draw->y <= draw->y2)
 	{
-		if (check_if_inside(mlx->draw.x, mlx->draw.y))
-			image_pixel_put(mlx->draw.color, (int)mlx->draw.x, (int)mlx->draw.y, mlx);
-		mlx->draw.y = mlx->draw.y + 1;
-		if (mlx->draw.parametric_value >= 0)
-			negative_slope_2(mlx);
+		image_pixel_put(draw, img);
+		draw->y = draw->y + 1;
+		if (draw->parametric_value >= 0)
+			negative_slope_2(draw);
 		else
-			mlx->draw.parametric_value = mlx->draw.parametric_value + 2 * mlx->draw.deltax;
+			draw->parametric_value = draw->parametric_value + 2 * draw->deltax;
 	}
 }
 
-void	draw_line(t_mlx *mlx)
+void	draw_line(t_draw *draw, t_img *img)
 {
-	mlx->draw.deltax = mlx->draw.x2 - mlx->draw.x1;
-	mlx->draw.deltay = mlx->draw.y2 - mlx->draw.y1;
-	if (mlx->draw.deltax == 0)
-		mlx->draw.slope = mlx->draw.deltay;
+	draw->deltax = draw->x2 - draw->x1;
+	draw->deltay = draw->y2 - draw->y1;
+	if (draw->deltax == 0)
+		draw->slope = draw->deltay;
 	else
-		mlx->draw.slope = mlx->draw.deltay / mlx->draw.deltax;
-	if (ft_fabs(mlx->draw.slope) < 1)
-		positive_negative_undefined_slope_1(mlx);
-	if (ft_fabs(mlx->draw.slope) >= 1)
-		negative_slope_1(mlx);
+		draw->slope = draw->deltay / draw->deltax;
+	if (ft_fabs(draw->slope) < 1)
+		positive_negative_undefined_slope_1(draw, img);
+	if (ft_fabs(draw->slope) >= 1)
+		negative_slope_1(draw, img);
 }

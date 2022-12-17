@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 02:43:56 by raho              #+#    #+#             */
-/*   Updated: 2022/12/17 06:10:44 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/17 08:50:12 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,29 @@ void	get_map_dimensions(int fd, t_map *map)
 	int		index;
 	char	buff[READ_BUFF + 1];
 
-	map->width_counter = 1;
+	map->width_counter = 0;
 	map->height = 1;
 	ret = read(fd, buff, READ_BUFF);
 	index = 0;
 	while (ret > 0)
 	{
 		buff[ret] = '\0';
-		while (index < ret)
+		while (index < ret && buff[index] != '\0')
 		{
-			if (buff[index] != ' ' && buff[index + 1] == ' ')
+			if (buff[index] != ' ' && (buff[index + 1] == ' ' || buff[index + 1] == '\n'))
 				map->width_counter++;
 			if (buff[index] == '\n')
 			{
 				if (map->width == 0)
 					map->width = map->width_counter;
+				else
+				{
+					if (map->width != map->width_counter)
+					{
+						ft_putendl_fd("bad map", 2);
+						exit (1);
+					}
+				}
 				map->width_counter = 0;
 				map->height++;
 			}

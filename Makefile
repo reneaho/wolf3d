@@ -6,7 +6,7 @@
 #    By: raho <raho@student.hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/21 18:17:08 by raho              #+#    #+#              #
-#    Updated: 2022/12/17 07:40:21 by raho             ###   ########.fr        #
+#    Updated: 2022/12/17 08:32:34 by raho             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 
 NAME = wolf3d
 CC = gcc
-CFLAGS = -g -O2
+CFLAGS = -g
 LIB = libft/libft.a
 LIBFTINCL = libft/
 MLXLIB = /usr/local/lib
@@ -32,7 +32,7 @@ MLXLINK = -lmlx -framework OpenGL -framework Appkit
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(OBJS)
+$(NAME): $(LIB) $(OBJS) $(INCL)
 	$(CC) $(CFLAGS) $(OBJS) $(LIB) -I $(LIBFTINCL) -I $(MLXINCL) \
 	-I $(INCL) $(MLXLINK) -o $(NAME)
 

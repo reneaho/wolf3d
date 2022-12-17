@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 02:43:56 by raho              #+#    #+#             */
-/*   Updated: 2022/09/02 06:14:48 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/17 06:10:44 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ static void	create_matrix_for_map(t_map *map)
 	{
 		map->matrix[index] = (int *)malloc(sizeof(int) * map->width);
 		if (map->matrix[index] == NULL)
-		{
-			free_matrix(index, map);
 			exit (1);
-		}
 		ft_bzero((int *)map->matrix[index], map->width);
 		index++;
 	}
@@ -39,6 +36,8 @@ void	get_map_dimensions(int fd, t_map *map)
 	int		index;
 	char	buff[READ_BUFF + 1];
 
+	map->width_counter = 1;
+	map->height = 1;
 	ret = read(fd, buff, READ_BUFF);
 	index = 0;
 	while (ret > 0)

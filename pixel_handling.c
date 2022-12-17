@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:25:14 by raho              #+#    #+#             */
-/*   Updated: 2022/09/02 06:34:15 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/12 18:52:52 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	image_pixel_put(t_draw *draw, t_img *img)
 {
 	char	*pixel;
 
-	if ((draw->x >= 0 && draw->x < WINDOW_SIZE_WIDTH) && \
-		(draw->y >= 0 && draw->y < WINDOW_SIZE_HEIGHT))
+	if ((draw->x >= 0 && draw->x <= img->width) && \
+		(draw->y >= 0 && draw->y <= img->height))
 	{
 		pixel = img->img_addr + (((int)draw->y * img->size_line) + \
 									((int)draw->x * (img->bits_per_pixel / 8)));
@@ -32,10 +32,10 @@ void	erase_img(t_img *img)
 	char	*pixel;
 
 	y = 0;
-	while (y < WINDOW_SIZE_HEIGHT)
+	while (y < img->height)
 	{
 		x = 0;
-		while (x < WINDOW_SIZE_WIDTH)
+		while (x < img->width)
 		{
 			pixel = img->img_addr + (y * img->size_line) + \
 						(x * (img->bits_per_pixel / 8));

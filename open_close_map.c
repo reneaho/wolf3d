@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:23:25 by raho              #+#    #+#             */
-/*   Updated: 2022/08/14 22:28:28 by raho             ###   ########.fr       */
+/*   Updated: 2022/09/16 23:06:03 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	close_map(int fd, t_map *map)
 	if (close(fd) == -1)
 	{
 		ft_putstr_fd("Closing the file failed", 2);
-		free_matrix(map->height, map);
 		exit (1);
 	}
 }

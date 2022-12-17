@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 18:24:25 by raho              #+#    #+#             */
-/*   Updated: 2022/08/21 21:40:52 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/17 04:13:43 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+# include <math.h>
 
 typedef struct s_list
 {
@@ -93,5 +94,8 @@ int		**ft_arrappint(int **arr, int *app, unsigned int n);
 int		ft_getnbr(char *str);
 double	ft_fabs(double x);
 char	**ft_split_whitespaces(char *str);
+int		ft_hex_to_int(char *hexcolor);
+double	ft_rad_to_deg(double radians);
+double	ft_deg_to_rad(double degrees);
 
 #endif

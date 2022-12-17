@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_mallocs.c                                     :+:      :+:    :+:   */
+/*   ft_rad_to_deg.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 19:01:18 by raho              #+#    #+#             */
-/*   Updated: 2022/09/02 03:48:01 by raho             ###   ########.fr       */
+/*   Created: 2022/09/07 19:49:56 by raho              #+#    #+#             */
+/*   Updated: 2022/12/17 04:13:20 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "libft.h"
 
-void	free_matrix(int height, t_map *map)
+double	ft_rad_to_deg(double radians)
 {
-	int	index;
+	double	degrees;
 
-	index = 0;
-	while (index < height)
-	{
-		free(map->matrix[index]);
-		index++;
-	}
-	free(map->matrix);
+	degrees = radians * 180.0 / (double)M_PI;
+	return (degrees);
 }

@@ -21,20 +21,21 @@ LIBFTINCL = libft/
 MLXLIB = /usr/local/lib
 MLXINCL = /usr/local/include
 INCL = wolf3d.h
-SRCS = main.c hooks.c open_close_map.c init_textures.c \
-		 pixel_handling.c handle_map_file.c \
+SRCS = main.c hooks.c init_textures.c \
+		 handle_map_file.c \
 		render.c raycast.c raycast_horizontal.c raycast_vertical.c \
-		draw.c
+		draw.c errors.c
 OBJS = $(SRCS:.c=.o)
-MLXLINK = -lmlx -framework OpenGL -framework Appkit
+MLXLINK = -lmlx -lXext -lX11 #-framework OpenGL -framework Appkit
+
 
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(OBJS) $(INCL)
+$(NAME): $(OBJS) $(LIB) $(INCL)
 	$(CC) $(CFLAGS) $(OBJS) $(LIB) -I $(LIBFTINCL) -I $(MLXINCL) \
-	-I $(INCL) $(MLXLINK) -o $(NAME)
+	-I $(INCL) $(MLXLINK) -o $(NAME) -lm
 
 $(LIB):
 	make -C libft

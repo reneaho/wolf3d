@@ -13,7 +13,6 @@
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# define READ_BUFF 500
 # define WINDOW_WIDTH 1200
 # define WINDOW_HEIGHT 900
 # define SQUARE_SIZE 64
@@ -42,12 +41,17 @@
 # define MAC_SHIFT 257
 # define MAC_ENTER 36
 # define MAC_ESC 53
-# define MOSS_GREEN 0x414129;
-# define SOFT_SKY_BLUE 0x4C7CAD;
+# define MOSS_GREEN 0x414129
+# define SOFT_SKY_BLUE 0x4C7CAD
 # define NORTH 1
 # define EAST 2
 # define SOUTH 3
 # define WEST 4
+# define EC_OPEN -21
+# define EC_GNL -22
+# define EC_CLOSE -23
+# define EC_MALLOC -24
+# define EC_BADMAP -25
 
 # include "libft/libft.h"
 # include "mlx.h"
@@ -56,21 +60,11 @@
 # include <stdio.h>
 # include <time.h>
 
-typedef struct s_draw
+typedef struct s_pointd
 {
 	double	x;
 	double	y;
-	double	x1;
-	double	y1;
-	double	x2;
-	double	y2;
-	double	deltax;
-	double	deltay;
-	double	slope;
-	double	parametric_value;
-	double	temp;
-	int		color;
-}	t_draw;
+}	t_pointd;
 
 typedef struct s_wall
 {
@@ -85,7 +79,7 @@ typedef struct s_map
 {
 	int		**matrix;
 	int		width;
-	int		width_counter;
+	int		width_check;
 	int		height;
 	int		wall_w;
 	int		wall_h;
@@ -119,11 +113,13 @@ typedef struct s_raycast
 	double	dist_to_proj_plane;
 	double	degrees_per_column;
 	double	degrees_per_ray;
-	int		projected_slice_height;
 	double	hor_coll_point_x;
 	double	ver_coll_point_y;
 	double	closest_coll_dist;
-	int		wall_texture_offset;
+	int		projected_slice_height;
+	int		wall_texture_xoffset;
+	int		wall_texture_yoffset;
+	double	wall_texture_yincrement;
 }	t_raycast;
 
 typedef struct s_img
@@ -164,7 +160,6 @@ typedef struct s_mlx
 	void		*win_ptr;
 	t_img		img;
 	t_map		map;
-	t_draw		draw;
 	t_player	player;
 	t_raycast	raycast;
 	t_texture	texture[4];
@@ -191,7 +186,7 @@ int		close_program(t_mlx *mlx);
 
 int		key_release(int key, void *param);
 
-void	draw_column(int ray_nbr, t_mlx *mlx);
+void	draw_column(t_mlx *mlx, int ray_nbr);
 
 double	ray_collision_distance(t_player *player, double coll_x, double coll_y);
 
@@ -203,5 +198,8 @@ int		find_ver_coll_point(t_mlx *mlx);
 double	calc_ver_coll_dist(t_mlx *mlx);
 void	save_vertical(t_mlx *mlx, double ver_coll_dist);
 
+void    errors(int error_code);
+
+void    errors_fd(int error_code, int fd);
 
 #endif

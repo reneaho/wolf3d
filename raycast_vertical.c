@@ -71,7 +71,7 @@ double	calc_ver_coll_dist(t_mlx *mlx)
 void	save_vertical(t_mlx *mlx, double ver_coll_dist)
 {
 	mlx->raycast.closest_coll_dist = ver_coll_dist;
-	mlx->raycast.wall_texture_offset = (int)mlx->raycast.ver_coll_point_y % \
+	mlx->raycast.wall_texture_xoffset = (int)mlx->raycast.ver_coll_point_y % \
 		SQUARE_SIZE;
 	if (mlx->raycast.ray_angle > 90.0 && mlx->raycast.ray_angle < 270.0)
 		mlx->player.compass = WEST;

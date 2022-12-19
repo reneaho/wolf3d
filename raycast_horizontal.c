@@ -70,7 +70,7 @@ double	calc_hor_coll_dist(t_mlx *mlx)
 void	save_horizontal(t_mlx *mlx, double hor_coll_dist)
 {
 	mlx->raycast.closest_coll_dist = hor_coll_dist;
-	mlx->raycast.wall_texture_offset = (int)mlx->raycast.hor_coll_point_x % SQUARE_SIZE;
+	mlx->raycast.wall_texture_xoffset = (int)mlx->raycast.hor_coll_point_x % SQUARE_SIZE;
 	if (mlx->raycast.ray_angle > 0.0 && mlx->raycast.ray_angle < 180.0)
 		mlx->player.compass = NORTH;
 	else

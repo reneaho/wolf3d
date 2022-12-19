@@ -12,106 +12,155 @@
 
 #include "wolf3d.h"
 
-static void	create_matrix_for_map(t_map *map)
+int	count_squares(char *line)
 {
-	int	index;
+	int	squares;
+	int	i;
 
-	index = 0;
-	map->matrix = (int **)malloc(sizeof(int *) * map->height);
-	if (map->matrix == NULL)
-		exit(1);
-	while (index < map->height)
+	squares = 0;
+	i = 0;
+	while (line[i + 1] != '\0')
 	{
-		map->matrix[index] = (int *)malloc(sizeof(int) * map->width);
-		if (map->matrix[index] == NULL)
-			exit (1);
-		ft_bzero((int *)map->matrix[index], map->width);
-		index++;
+		if ((line[i] != ' ' && line[i] != '\t' && line[i] != '\n') && \
+			(line[i + 1] == ' ' || line[i + 1] == '\t' || line[i + 1] == '\n'))
+			squares++;
+		i++;
 	}
+	if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+		squares++;
+	return (squares);	
 }
 
-void	get_map_dimensions(int fd, t_map *map)
+int	width_checks(int fd, int width, t_map *map)
+{
+	if (width == 0)
+		errors_fd(EC_BADMAP, fd);
+	if (map->width == 0)
+		map->width = width;
+	if (width != map->width)
+		errors_fd(EC_BADMAP, fd);
+}
+
+int	get_map_dimensions(int fd, t_map *map)
 {
 	int		ret;
-	int		index;
-	char	buff[READ_BUFF + 1];
+	int		width;
+	char	*line;
 
-	map->width_counter = 0;
-	map->height = 1;
-	ret = read(fd, buff, READ_BUFF);
-	index = 0;
+	line = NULL;
+	ret = get_next_line(fd, &line);
 	while (ret > 0)
 	{
-		buff[ret] = '\0';
-		while (index < ret && buff[index] != '\0')
+		width = count_squares(line);
+		width_checks(fd, width, map);
+		map->height++;
+		if (line)
 		{
-			if (buff[index] != ' ' && (buff[index + 1] == ' ' || buff[index + 1] == '\n'))
-				map->width_counter++;
-			if (buff[index] == '\n')
-			{
-				if (map->width == 0)
-					map->width = map->width_counter;
-				else
-				{
-					if (map->width != map->width_counter)
-					{
-						ft_putendl_fd("bad map", 2);
-						exit (1);
-					}
-				}
-				map->width_counter = 0;
-				map->height++;
-			}
-			index++;
+			free(line);
+			line = NULL;
 		}
-		ret = read(fd, buff, READ_BUFF);
+		ret = get_next_line(fd, &line);
+	}
+	if (line)
+		free(line);
+	if (ret == -1)
+		errors_fd(EC_GNL, fd);
+	if (map->width < 3 || map->height < 3)
+		errors_fd(EC_BADMAP, fd);
+}
+
+static void	create_matrix_for_map(t_map *map)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	map->matrix = (int **)malloc(sizeof(int *) * map->height);
+	if (map->matrix == NULL)
+		errors(EC_MALLOC);
+	while (y < map->height)
+	{
+		map->matrix[y] = (int *)malloc(sizeof(int) * map->width);
+		if (map->matrix[y] == NULL)
+			errors(EC_MALLOC);
+		x = 0;
+		while (x < map->width)
+		{
+			map->matrix[y][x] = 0;
+			x++;
+		}
+		y++;
 	}
 }
 
-static void	copy_map_to_matrix_helper(char *buff, t_map *map)
+static void	copy_map_to_matrix_helper(char *line, t_map *map)
 {
-	static int	x = 0;
-	static int	y = 0;
+	static int	y;
+	int			x;
+	int			index;
 
-	map->matrix[y][x] = ft_atoi(buff);
-	x++;
-	if (x == map->width)
+	x = 0;
+	index = 0;
+	while (line[index] != '\0')
 	{
-		y++;
-		x = 0;
+		if (line[index] != ' ' && line[index] != '\t')
+		{
+			map->matrix[y][x] = ft_atoi(&line[index]);
+			x++;
+			while (line[index] != ' ' && line[index] != '\t' && line[index] != '\0')
+				index++;
+		}
+		else
+			index++;
 	}
+	y++;
 }
 
 static void	copy_map_to_matrix(int fd, t_map *map)
 {
 	int		ret;
-	int		index;
-	char	buff[READ_BUFF + 1];
+	char	*line;
 
-	ret = read(fd, buff, READ_BUFF);
-	index = 0;
+
+	line = NULL;
+	ret = get_next_line(fd, &line);
 	while (ret > 0)
 	{
-		buff[ret] = '\0';
-		while (index != ret)
+		copy_map_to_matrix_helper(line, map);
+		if (line)
 		{
-			if (buff[index] != '\n' && buff[index] != ' ')
-				copy_map_to_matrix_helper(&buff[index], map);
-			index++;
+			free(line);
+			line = NULL;
 		}
-		ret = read(fd, buff, READ_BUFF);
+		ret = get_next_line(fd, &line);
 	}
+	if (line)
+		free (line);
+	if (ret == -1)
+		errors_fd(EC_GNL, fd);
 }
 
 void	save_map(char *filename, t_map *map)
 {
 	int		fd;
 
-	fd = open_map(filename);
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		errors(EC_OPEN);
 	get_map_dimensions(fd, map);
-	close_map(fd, map);
+	if (close(fd) == -1)
+		errors(EC_CLOSE);
 	create_matrix_for_map(map);
-	fd = open_map(filename);
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		errors(EC_OPEN);
 	copy_map_to_matrix(fd, map);
-	close_map(fd, map);
+	if (close(fd) == -1)
+		errors(EC_CLOSE);
+	for (int y = 0; y < map->height; y++)
+	{
+		for (int x = 0; x < map->width; x++)
+			printf("%d ", map->matrix[y][x]);
+		printf("\n");
+	}
 }

@@ -25,19 +25,19 @@ int	key_press(int key, void *param)
 	t_mlx	*mlx;
 	
 	mlx = (t_mlx *)param;
-	if (key == MAC_A)
+	if (key == MAC_A || LINUX_A)
 		mlx->player.left = 1;
-	if (key == MAC_D)
+	if (key == MAC_D || LINUX_D)
 		mlx->player.right = 1;
-	if (key == MAC_W)
+	if (key == MAC_W || LINUX_W)
 		mlx->player.forward = 1;
-	if (key == MAC_S)
+	if (key == MAC_S || LINUX_S)
 		mlx->player.back = 1;
 	if (key == MAC_SHIFT)
 		mlx->player.move_speed = 6;
 	if (key == LINUX_ESC || key == MAC_ESC)
 		close_program(mlx);
-	if (key == MAC_ENTER)
+	if (key == MAC_ENTER || LINUX_ENTER)
 	{
 		mlx_destroy_image(mlx->mlx_ptr, mlx->img.img_ptr);
 		mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
@@ -51,13 +51,13 @@ int	key_release(int key, void *param)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)param;
-	if (key == MAC_A)
+	if (key == MAC_A || LINUX_A)
 		mlx->player.left = 0;
-	if (key == MAC_D)
+	if (key == MAC_D || LINUX_D)
 		mlx->player.right = 0;
-	if (key == MAC_W)
+	if (key == MAC_W|| LINUX_W)
 		mlx->player.forward = 0;
-	if (key == MAC_S)
+	if (key == MAC_S || LINUX_S)
 		mlx->player.back = 0;
 	if (key == MAC_SHIFT)
 		mlx->player.move_speed = 4;
@@ -99,16 +99,16 @@ void	limit_collision(t_mlx *mlx)
 	if (mlx->player.forward == 1)
 	{
 		if (mlx->map.matrix[player_pos_y_in_square][player_pos_x_in_square_plus_offset] == 0)
-			mlx->player.pos_x += mlx->player.dir_x * mlx->player.move_speed; // * fps
+			mlx->player.pos_x += mlx->player.dir_x * mlx->player.move_speed;
 		if (mlx->map.matrix[player_pos_y_in_square_plus_offset][player_pos_x_in_square] == 0)
-			mlx->player.pos_y += mlx->player.dir_y * mlx->player.move_speed; // * fps
+			mlx->player.pos_y += mlx->player.dir_y * mlx->player.move_speed;
 	}
 	if (mlx->player.back == 1)
 	{
 		if (mlx->map.matrix[player_pos_y_in_square][player_pos_x_in_square_minus_offset] == 0)
-			mlx->player.pos_x -= mlx->player.dir_x * mlx->player.move_speed; // * fps
+			mlx->player.pos_x -= mlx->player.dir_x * mlx->player.move_speed;
 		if (mlx->map.matrix[player_pos_y_in_square_minus_offset][player_pos_x_in_square] == 0)
-			mlx->player.pos_y -= mlx->player.dir_y * mlx->player.move_speed; // * fps
+			mlx->player.pos_y -= mlx->player.dir_y * mlx->player.move_speed;
 	}
 }
 
@@ -116,19 +116,19 @@ void	add_movement(t_mlx *mlx)
 {
 	if (mlx->player.left == 1)
 	{
-		mlx->player.pos_angle += TURN_SPEED; // * fps
+		mlx->player.pos_angle += TURN_SPEED;
 		if (mlx->player.pos_angle >= 360)
 			mlx->player.pos_angle -= 360;
-		mlx->player.dir_x = cos(ft_deg_to_rad(mlx->player.pos_angle)); // * RAY_LENGTH to see which direction the player is pointing without the rays
-		mlx->player.dir_y = -sin(ft_deg_to_rad(mlx->player.pos_angle)); // * RAY_LENGTH to see which direction the player is pointing without the rays
+		mlx->player.dir_x = cos(ft_deg_to_rad(mlx->player.pos_angle));
+		mlx->player.dir_y = -sin(ft_deg_to_rad(mlx->player.pos_angle));
 	}
 	if (mlx->player.right == 1)
 	{
-		mlx->player.pos_angle -= TURN_SPEED; // * fps
+		mlx->player.pos_angle -= TURN_SPEED;
 		if (mlx->player.pos_angle < 0)
 			mlx->player.pos_angle += 360;
-		mlx->player.dir_x = cos(ft_deg_to_rad(mlx->player.pos_angle)); // * RAY_LENGTH to see which direction the player is pointing without the rays
-		mlx->player.dir_y = -sin(ft_deg_to_rad(mlx->player.pos_angle)); // * RAY_LENGTH to see which direction the player is pointing without the rays
+		mlx->player.dir_x = cos(ft_deg_to_rad(mlx->player.pos_angle));
+		mlx->player.dir_y = -sin(ft_deg_to_rad(mlx->player.pos_angle));
 	}
 	if (mlx->player.forward == 1 || mlx->player.back == 1)
 		limit_collision(mlx);
@@ -159,11 +159,6 @@ static void	fix_circle_angle(double *angle)
 		*angle += 360.0;
 }
 
-void	breakpointt(void)
-{
-	
-}
-
 int	render_all(void *param)
 {
 	t_mlx		*mlx;
@@ -176,16 +171,14 @@ int	render_all(void *param)
 	ray_nbr = 0;
 	while (ray_nbr < WINDOW_WIDTH)
 	{
-		if (ray_nbr == 500)
-			breakpointt();
 		raycast(mlx);
 		if (mlx->raycast.closest_coll_dist > 0)
-			draw_column(ray_nbr, mlx);
+			draw_column(mlx, ray_nbr);
 		mlx->raycast.ray_angle -= mlx->raycast.degrees_per_ray;
 		fix_circle_angle(&mlx->raycast.ray_angle);
 		ray_nbr++;
 	}
-	fps_counter();
+	//fps_counter();
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, \
 											mlx->img.img_ptr, 0, 0);
 	return (0);

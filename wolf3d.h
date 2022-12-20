@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:57:27 by raho              #+#    #+#             */
-/*   Updated: 2022/12/17 07:47:28 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 13:26:28 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@
 # include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
-# include <stdio.h>
-# include <time.h>
 
 typedef struct s_pointd
 {
@@ -66,39 +64,37 @@ typedef struct s_pointd
 	double	y;
 }	t_pointd;
 
-typedef struct s_wall
-{
-	double	x1;
-	double	y1;
-	double	x2;
-	double	y2;
-	int		color;
-}	t_wall;
-
 typedef struct s_map
 {
 	int		**matrix;
 	int		width;
-	int		width_check;
 	int		height;
-	int		wall_w;
-	int		wall_h;
-	t_wall	wall[4];
 }	t_map;
+
+typedef struct s_collision
+{
+	int	square_pos_x;
+	int	square_pos_x_plus_offset;
+	int	square_pos_x_minus_offset;
+	int	square_pos_y;
+	int	square_pos_y_plus_offset;
+	int	square_pos_y_minus_offset;
+}	t_collision;
 
 typedef struct s_player
 {
-	double	pos_angle;
-	double	pos_x;
-	double	pos_y;
-	double	dir_x;
-	double	dir_y;
-	int		move_speed;
-	int		compass;
-	int		left;
-	int		right;
-	int		forward;
-	int		back;
+	t_collision	collision;
+	double		pos_angle;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	int			move_speed;
+	int			compass;
+	int			left;
+	int			right;
+	int			forward;
+	int			back;
 }	t_player;
 
 typedef struct s_raycast
@@ -146,13 +142,7 @@ typedef struct s_texture
 	int		endian;
 	int		img_height;
 	int		img_width;
-	
 }	t_texture;
-
-typedef struct s_keys
-{
-
-}	t_keys;
 
 typedef struct s_mlx
 {
@@ -163,31 +153,22 @@ typedef struct s_mlx
 	t_player	player;
 	t_raycast	raycast;
 	t_texture	texture[4];
-	t_keys		keys;
 }	t_mlx;
 
 void	init_textures(t_mlx *mlx);
-
 void	init_structs(t_mlx *mlx);
 
-int		open_map(char *filename);
-
-void	close_map(int fd, t_map *map);
-
+void	check_map(char *filename, t_map *map);
 void	save_map(char *filename, t_map *map);
 
 int		render_all(void *param);
 
-void	raycast(t_mlx *mlx);
-
 int		key_press(int key, void *param);
-
-int		close_program(t_mlx *mlx);
-
 int		key_release(int key, void *param);
 
-void	draw_column(t_mlx *mlx, int ray_nbr);
+void	add_movement(t_mlx *mlx);
 
+void	raycast(t_mlx *mlx);
 double	ray_collision_distance(t_player *player, double coll_x, double coll_y);
 
 int		find_hor_coll_point(t_mlx *mlx);
@@ -198,8 +179,10 @@ int		find_ver_coll_point(t_mlx *mlx);
 double	calc_ver_coll_dist(t_mlx *mlx);
 void	save_vertical(t_mlx *mlx, double ver_coll_dist);
 
-void    errors(int error_code);
+void	draw_column(t_mlx *mlx, int ray_nbr);
 
-void    errors_fd(int error_code, int fd);
+void	errors(int error_code);
+void	errors_fd(int error_code, int fd);
+int		close_program(t_mlx *mlx);
 
 #endif

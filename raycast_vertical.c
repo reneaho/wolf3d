@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 07:19:42 by raho              #+#    #+#             */
-/*   Updated: 2022/12/17 07:46:31 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 12:37:30 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ int	find_ver_coll_point(t_mlx *mlx)
 			(mlx->player.pos_x - mlx->raycast.ray_x) * \
 			tan(ft_deg_to_rad(mlx->raycast.ray_angle));
 		mlx->raycast.offset_x = -SQUARE_SIZE;
-		mlx->raycast.offset_y = -mlx->raycast.offset_x * 
+		mlx->raycast.offset_y = -mlx->raycast.offset_x * \
 			tan(ft_deg_to_rad(mlx->raycast.ray_angle));
 	}
-	else if ((mlx->raycast.ray_angle > 270.0 && mlx->raycast.ray_angle <= 360.0) \
-			|| (mlx->raycast.ray_angle >= 0.0 && mlx->raycast.ray_angle < 90.0))
+	else if ((mlx->raycast.ray_angle > 270.0 && \
+			mlx->raycast.ray_angle <= 360.0) || \
+			(mlx->raycast.ray_angle >= 0.0 && mlx->raycast.ray_angle < 90.0))
 	{
 		mlx->raycast.ray_x = (((int)mlx->player.pos_x >> 6) << 6) + SQUARE_SIZE;
 		mlx->raycast.ray_y = mlx->player.pos_y + \

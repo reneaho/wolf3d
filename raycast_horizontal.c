@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 07:17:22 by raho              #+#    #+#             */
-/*   Updated: 2022/12/17 07:46:42 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 12:38:49 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	find_hor_coll_point(t_mlx *mlx)
 		mlx->raycast.offset_x = -mlx->raycast.offset_y / \
 			tan(ft_deg_to_rad(mlx->raycast.ray_angle));
 	}
-	else  if (mlx->raycast.ray_angle > 180.0 && mlx->raycast.ray_angle < 360.0)
+	else if (mlx->raycast.ray_angle > 180.0 && \
+				mlx->raycast.ray_angle < 360.0)
 	{
 		mlx->raycast.ray_y = (((int)mlx->player.pos_y >> 6) << 6) + SQUARE_SIZE;
 		mlx->raycast.ray_x = mlx->player.pos_x + \
@@ -70,7 +71,8 @@ double	calc_hor_coll_dist(t_mlx *mlx)
 void	save_horizontal(t_mlx *mlx, double hor_coll_dist)
 {
 	mlx->raycast.closest_coll_dist = hor_coll_dist;
-	mlx->raycast.wall_texture_xoffset = (int)mlx->raycast.hor_coll_point_x % SQUARE_SIZE;
+	mlx->raycast.wall_texture_xoffset = (int)mlx->raycast.hor_coll_point_x % \
+																SQUARE_SIZE;
 	if (mlx->raycast.ray_angle > 0.0 && mlx->raycast.ray_angle < 180.0)
 		mlx->player.compass = NORTH;
 	else

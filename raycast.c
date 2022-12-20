@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:35:05 by raho              #+#    #+#             */
-/*   Updated: 2022/12/17 07:40:45 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 12:39:04 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void	raycast(t_mlx *mlx)
 	else
 		save_horizontal(mlx, hor_coll_dist);
 	fish_eye_fix_beta = mlx->player.pos_angle - mlx->raycast.ray_angle;
-	mlx->raycast.closest_coll_dist = mlx->raycast.closest_coll_dist * cos(ft_deg_to_rad(fish_eye_fix_beta));
+	mlx->raycast.closest_coll_dist = mlx->raycast.closest_coll_dist * \
+									cos(ft_deg_to_rad(fish_eye_fix_beta));
 }

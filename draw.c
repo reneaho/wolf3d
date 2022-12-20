@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 07:25:17 by raho              #+#    #+#             */
-/*   Updated: 2022/12/17 07:45:45 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 12:48:18 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	draw_pixel(t_img *img, t_pointd point, int color)
 {
 	char	*pixel;
-	
+
 	if (((int)point.x >= 0 && (int)point.x <= WINDOW_WIDTH) && \
 		((int)point.y >= 0 && (int)point.y <= WINDOW_HEIGHT))
 	{
@@ -34,7 +34,6 @@ static int	pick_pixel(t_mlx *mlx, int y)
 
 	scaled_y = 256 * y / 64;
 	scaled_x = 256 * mlx->raycast.wall_texture_xoffset / 64;
-
 	if (mlx->player.compass == NORTH)
 		texture = &mlx->texture[0];
 	else if (mlx->player.compass == EAST)
@@ -51,11 +50,12 @@ static int	pick_pixel(t_mlx *mlx, int y)
 	return (*(int *)pixel);
 }
 
-void	draw_sky_wall_floor(t_mlx *mlx, t_pointd start, t_pointd end, double texture_y)
+static void	draw_loops(t_mlx *mlx, t_pointd start, t_pointd end, double txtr_y)
 {
 	if (mlx->raycast.projected_slice_height < WINDOW_HEIGHT)
 	{
-		end.y = (double)(WINDOW_HEIGHT / 2) - (double)(mlx->raycast.projected_slice_height / 2);
+		end.y = (double)(WINDOW_HEIGHT / 2) - \
+				(double)(mlx->raycast.projected_slice_height / 2);
 		while (start.y < end.y)
 		{
 			draw_pixel(&mlx->img, start, SOFT_SKY_BLUE);
@@ -65,8 +65,8 @@ void	draw_sky_wall_floor(t_mlx *mlx, t_pointd start, t_pointd end, double textur
 	}
 	while (start.y < end.y)
 	{
-		draw_pixel(&mlx->img, start, pick_pixel(mlx, (int)texture_y));
-		texture_y += mlx->raycast.wall_texture_yincrement;
+		draw_pixel(&mlx->img, start, pick_pixel(mlx, (int)txtr_y));
+		txtr_y += mlx->raycast.wall_texture_yincrement;
 		start.y++;
 	}
 	if (end.y < (double)WINDOW_HEIGHT)
@@ -87,18 +87,22 @@ void	draw_column(t_mlx *mlx, int ray_nbr)
 	t_raycast	*raycast;
 
 	raycast = &mlx->raycast;
-	raycast->projected_slice_height = (double)SQUARE_SIZE / raycast->closest_coll_dist * raycast->dist_to_proj_plane;
-	raycast->wall_texture_yincrement = (double)SQUARE_SIZE / (double)raycast->projected_slice_height;
+	raycast->projected_slice_height = (double)SQUARE_SIZE / \
+			raycast->closest_coll_dist * raycast->dist_to_proj_plane;
+	raycast->wall_texture_yincrement = (double)SQUARE_SIZE / \
+			(double)raycast->projected_slice_height;
 	raycast->wall_texture_yoffset = 0;
 	if (raycast->projected_slice_height > WINDOW_HEIGHT)
 	{
-		raycast->wall_texture_yoffset = (double)(raycast->projected_slice_height - WINDOW_HEIGHT) / 2.0;
+		raycast->wall_texture_yoffset = \
+			(double)(raycast->projected_slice_height - WINDOW_HEIGHT) / 2.0;
 		raycast->projected_slice_height = WINDOW_HEIGHT;
 	}
-	texture_y = raycast->wall_texture_yoffset * raycast->wall_texture_yincrement;
+	texture_y = raycast->wall_texture_yoffset * \
+	raycast->wall_texture_yincrement;
 	start.x = ray_nbr;
 	start.y = 0.0;
 	end.x = ray_nbr;
 	end.y = WINDOW_HEIGHT;
-	draw_sky_wall_floor(mlx, start, end, texture_y);
+	draw_loops(mlx, start, end, texture_y);
 }

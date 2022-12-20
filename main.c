@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 21:45:41 by raho              #+#    #+#             */
-/*   Updated: 2022/12/17 08:28:43 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 12:44:39 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,45 @@
 
 void	init_structs(t_mlx *mlx)
 {
-	static int	restart = 0;
-
-	if (restart == 0)
-	{
-		ft_bzero(mlx, sizeof(t_mlx));
-		mlx->mlx_ptr = mlx_init();
-		if (mlx->mlx_ptr == NULL)
-			exit (1);
-		mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, \
-						WINDOW_WIDTH, WINDOW_HEIGHT, "wolf3d");
-		if (mlx->win_ptr == NULL)
-			exit (1);
-		mlx->img.img_ptr = mlx_new_image(mlx->mlx_ptr, \
-					WINDOW_WIDTH, WINDOW_WIDTH);
-		if (mlx->img.img_ptr == NULL)
-			exit (1);
-		mlx->img.img_addr = mlx_get_data_addr(mlx->img.img_ptr, \
-							&mlx->img.bits_per_pixel, \
-							&mlx->img.size_line, &mlx->img.endian);
-		if (mlx->img.img_addr == NULL)
-			exit (1);
-		init_textures(mlx);
-		restart = 1;
-	}
-
+	ft_bzero(mlx, sizeof(t_mlx));
+	mlx->mlx_ptr = mlx_init();
+	if (mlx->mlx_ptr == NULL)
+		exit (1);
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, \
+					WINDOW_WIDTH, WINDOW_HEIGHT, "wolf3d");
+	if (mlx->win_ptr == NULL)
+		exit (1);
+	mlx->img.img_ptr = mlx_new_image(mlx->mlx_ptr, \
+				WINDOW_WIDTH, WINDOW_WIDTH);
+	if (mlx->img.img_ptr == NULL)
+		exit (1);
+	mlx->img.img_addr = mlx_get_data_addr(mlx->img.img_ptr, \
+						&mlx->img.bits_per_pixel, \
+						&mlx->img.size_line, &mlx->img.endian);
+	if (mlx->img.img_addr == NULL)
+		exit (1);
+	init_textures(mlx);
 	mlx->player.move_speed = 4;
-	mlx->raycast.dist_to_proj_plane = (double)(WINDOW_WIDTH / 2) / tan(ft_deg_to_rad(FOV / 2));
+	mlx->raycast.dist_to_proj_plane = (double)(WINDOW_WIDTH / 2) / \
+										tan(ft_deg_to_rad(FOV / 2));
 	mlx->raycast.degrees_per_column = (double)WINDOW_WIDTH / (double)FOV;
 	mlx->raycast.degrees_per_ray = (double)FOV / (double)WINDOW_WIDTH;
+}
+
+void	save_player_pos(t_mlx *mlx, int x, int y)
+{
+	if (mlx->map.matrix[y][x + 1] == 0)
+		mlx->player.pos_angle = 0;
+	else if (mlx->map.matrix[y + 1][x] == 0)
+		mlx->player.pos_angle = 270;
+	else
+		mlx->player.pos_angle = 180;
+	mlx->player.pos_x = (double)SQUARE_SIZE * (x + 1) - \
+						((double)SQUARE_SIZE / 2.0);
+	mlx->player.pos_y = (double)SQUARE_SIZE * (y + 1) - \
+						((double)SQUARE_SIZE / 2.0);
+	mlx->player.dir_x = cos(ft_deg_to_rad(mlx->player.pos_angle));
+	mlx->player.dir_y = -sin(ft_deg_to_rad(mlx->player.pos_angle));
 }
 
 int	find_player_start_position(t_mlx *mlx)
@@ -58,16 +68,7 @@ int	find_player_start_position(t_mlx *mlx)
 		{
 			if (mlx->map.matrix[y][x] == 0)
 			{
-				if (mlx->map.matrix[y][x + 1] == 0)
-					mlx->player.pos_angle = 0;
-				else if (mlx->map.matrix[y + 1][x] == 0)
-					mlx->player.pos_angle = 270;
-				else
-					mlx->player.pos_angle = 180;
-				mlx->player.pos_x = (double)SQUARE_SIZE * (x + 1) - ((double)SQUARE_SIZE / 2.0);
-				mlx->player.pos_y = (double)SQUARE_SIZE * (y + 1) - ((double)SQUARE_SIZE / 2.0);
-				mlx->player.dir_x = cos(ft_deg_to_rad(mlx->player.pos_angle));
-				mlx->player.dir_y = -sin(ft_deg_to_rad(mlx->player.pos_angle));
+				save_player_pos(mlx, x, y);
 				return (0);
 			}
 			x++;
@@ -84,6 +85,7 @@ int	main(int argc, char *argv[])
 	if (argc == 2)
 	{
 		init_structs(&mlx);
+		check_map(argv[1], &mlx.map);
 		save_map(argv[1], &mlx.map);
 		if (find_player_start_position(&mlx) == -1)
 		{

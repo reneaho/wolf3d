@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:57:27 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 13:26:28 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 14:16:52 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,9 @@ typedef struct s_mlx
 void	init_textures(t_mlx *mlx);
 void	init_structs(t_mlx *mlx);
 
-void	check_map(char *filename, t_map *map);
-void	save_map(char *filename, t_map *map);
+void	read_map(t_map *map, char *filename);
+void	save_map(t_map *map, char *filename);
+void	validate_map(t_map *map);
 
 int		render_all(void *param);
 

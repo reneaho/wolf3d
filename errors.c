@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 02:43:56 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 13:35:51 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 13:52:00 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	errors(int error_code)
 		ft_putendl_fd("error: closing the map failed", 2);
 	if (error_code == EC_MALLOC)
 		ft_putendl_fd("error: malloc failed", 2);
+	if (error_code == EC_BADMAP)
+		ft_putendl_fd("error: bad map", 2);
 	exit (-1);
 }
 

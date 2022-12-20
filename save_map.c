@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:42:51 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 12:44:04 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 13:50:51 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	copy_map_to_matrix(int fd, t_map *map)
 		errors_fd(EC_GNL, fd);
 }
 
-void	save_map(char *filename, t_map *map)
+void	save_map(t_map *map, char *filename)
 {
 	int		fd;
 

@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 21:45:41 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 12:44:39 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 14:23:20 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	find_player_start_position(t_mlx *mlx)
 	while (y < mlx->map.height)
 	{
 		x = 1;
-		while (x < mlx->map.height)
+		while (x < mlx->map.width)
 		{
 			if (mlx->map.matrix[y][x] == 0)
 			{
@@ -85,8 +85,9 @@ int	main(int argc, char *argv[])
 	if (argc == 2)
 	{
 		init_structs(&mlx);
-		check_map(argv[1], &mlx.map);
-		save_map(argv[1], &mlx.map);
+		read_map(&mlx.map, argv[1]);
+		save_map(&mlx.map, argv[1]);
+		validate_map(&mlx.map);
 		if (find_player_start_position(&mlx) == -1)
 		{
 			ft_putendl_fd("no valid starting point for the player", 2);

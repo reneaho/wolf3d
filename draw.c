@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 07:25:17 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 12:48:18 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 13:32:41 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	pick_pixel(t_mlx *mlx, int y)
 	int			scaled_y;
 	int			scaled_x;
 
+	texture = NULL;
 	scaled_y = 256 * y / 64;
 	scaled_x = 256 * mlx->raycast.wall_texture_xoffset / 64;
 	if (mlx->player.compass == NORTH)

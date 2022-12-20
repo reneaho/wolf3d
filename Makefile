@@ -6,16 +6,13 @@
 #    By: raho <raho@student.hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/21 18:17:08 by raho              #+#    #+#              #
-#    Updated: 2022/12/20 13:23:10 by raho             ###   ########.fr        #
+#    Updated: 2022/12/20 13:33:29 by raho             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Add dependancy for header file - if header is modified, rebuild .o files. #
-# Same for Makefile changes #
-
 NAME = wolf3d
 CC = gcc
-CFLAGS = -g
+CFLAGS = -Wall -Wextra -Werror
 LIB = libft/libft.a
 LIBFTINCL = libft/
 MLXLIB = /usr/local/lib
@@ -25,7 +22,7 @@ SRCS = check_map.c draw.c errors.c hooks.c init_textures.c main.c \
 		player_movement.c raycast_horizontal.c raycast_vertical.c raycast.c \
 		save_map.c
 OBJS = $(SRCS:.c=.o)
-MLXLINK = -lmlx -framework OpenGL -framework Appkit #-lXext -lX11
+MLXLINK = -lmlx -framework OpenGL -framework Appkit
 
 .PHONY: all clean fclean re
 

@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 02:43:56 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 12:54:34 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/20 13:35:51 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	errors(int error_code)
 void	errors_fd(int error_code, int fd)
 {
 	if (error_code == EC_GNL)
-		ft_putendl_fd("error: reading the map with get_next_line failed", 2);
+		ft_putendl_fd("error: reading the map failed", 2);
 	if (error_code == EC_BADMAP)
 		ft_putendl_fd("error: bad map", 2);
 	if (close(fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:02:28 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 13:23:21 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 13:31:08 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,20 @@ int	key_press(int key, void *param)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)param;
-	if (key == MAC_A || key == LINUX_A)
+	if (key == LEFT)
 		mlx->player.left = 1;
-	if (key == MAC_D || key == LINUX_D)
+	if (key == RIGHT)
 		mlx->player.right = 1;
-	if (key == MAC_W || key == LINUX_W)
+	if (key == FORWARD)
 		mlx->player.forward = 1;
-	if (key == MAC_S || key == LINUX_S)
+	if (key == BACK)
 		mlx->player.back = 1;
-	if (key == MAC_SHIFT)
-		mlx->player.move_speed = 6;
-	if (key == LINUX_ESC || key == MAC_ESC)
+	if (key == SHIFT)
+	{
+		mlx->player.move_speed = MOVE_SPEED * 2;
+		mlx->player.turn_speed = TURN_SPEED * 2;
+	}
+	if (key == ESC)
 		close_program(mlx);
 	return (0);
 }
@@ -45,16 +48,19 @@ int	key_release(int key, void *param)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)param;
-	if (key == MAC_A)
+	if (key == LEFT)
 		mlx->player.left = 0;
-	if (key == MAC_D)
+	if (key == RIGHT)
 		mlx->player.right = 0;
-	if (key == MAC_W)
+	if (key == FORWARD)
 		mlx->player.forward = 0;
-	if (key == MAC_S)
+	if (key == BACK)
 		mlx->player.back = 0;
-	if (key == MAC_SHIFT)
-		mlx->player.move_speed = 4;
+	if (key == SHIFT)
+	{
+		mlx->player.move_speed = MOVE_SPEED;
+		mlx->player.turn_speed = TURN_SPEED;
+	}
 	return (0);
 }
 

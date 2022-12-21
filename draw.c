@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 07:25:17 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 13:32:41 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 13:39:31 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ static void	draw_loops(t_mlx *mlx, t_pointd start, t_pointd end, double txtr_y)
 
 void	draw_column(t_mlx *mlx, int ray_nbr)
 {
+	t_raycast	*raycast;
 	t_pointd	start;
 	t_pointd	end;
 	double		texture_y;
-	t_raycast	*raycast;
 
 	raycast = &mlx->raycast;
 	raycast->projected_slice_height = (double)SQUARE_SIZE / \

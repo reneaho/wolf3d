@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 12:42:51 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 13:50:51 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 13:57:44 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	create_matrix_for_map(t_map *map)
 	}
 }
 
-static void	copy_map_to_matrix_helper(char *line, t_map *map)
+static void	copy_single_line(t_map *map, char *line)
 {
 	static int	y;
 	int			x;
@@ -60,7 +60,7 @@ static void	copy_map_to_matrix_helper(char *line, t_map *map)
 	y++;
 }
 
-static void	copy_map_to_matrix(int fd, t_map *map)
+static void	copy_map_to_matrix(t_map *map, int fd)
 {
 	int		ret;
 	char	*line;
@@ -69,7 +69,7 @@ static void	copy_map_to_matrix(int fd, t_map *map)
 	ret = get_next_line(fd, &line);
 	while (ret > 0)
 	{
-		copy_map_to_matrix_helper(line, map);
+		copy_single_line(map, line);
 		if (line)
 		{
 			free(line);
@@ -91,7 +91,7 @@ void	save_map(t_map *map, char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		errors(EC_OPEN);
-	copy_map_to_matrix(fd, map);
+	copy_map_to_matrix(map, fd);
 	if (close(fd) == -1)
 		errors(EC_CLOSE);
 }

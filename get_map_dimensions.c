@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 02:43:56 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 13:50:21 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 13:59:06 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static void	get_map_dimensions(t_map *map, int fd)
 		free(line);
 	if (ret == -1)
 		errors_fd(EC_GNL, fd);
-	if (map->width < 3 || map->height < 3)
+	if (map->width < 3 || map->height < 3 || \
+			map->width > 100 || map->height > 100)
 		errors_fd(EC_BADMAP, fd);
 }
 

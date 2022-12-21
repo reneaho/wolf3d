@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 13:21:42 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 13:24:04 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 13:31:34 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	add_movement(t_mlx *mlx)
 {
 	if (mlx->player.left == 1)
 	{
-		mlx->player.pos_angle += TURN_SPEED;
+		mlx->player.pos_angle += mlx->player.turn_speed;
 		if (mlx->player.pos_angle >= 360)
 			mlx->player.pos_angle -= 360;
 		mlx->player.dir_x = cos(ft_deg_to_rad(mlx->player.pos_angle));
@@ -74,7 +74,7 @@ void	add_movement(t_mlx *mlx)
 	}
 	if (mlx->player.right == 1)
 	{
-		mlx->player.pos_angle -= TURN_SPEED;
+		mlx->player.pos_angle -= mlx->player.turn_speed;
 		if (mlx->player.pos_angle < 0)
 			mlx->player.pos_angle += 360;
 		mlx->player.dir_x = cos(ft_deg_to_rad(mlx->player.pos_angle));

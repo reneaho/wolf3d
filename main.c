@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 21:45:41 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 14:23:20 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 13:33:27 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	init_structs(t_mlx *mlx)
 	if (mlx->img.img_addr == NULL)
 		exit (1);
 	init_textures(mlx);
-	mlx->player.move_speed = 4;
+	mlx->player.move_speed = MOVE_SPEED;
+	mlx->player.turn_speed = TURN_SPEED;
 	mlx->raycast.dist_to_proj_plane = (double)(WINDOW_WIDTH / 2) / \
 										tan(ft_deg_to_rad(FOV / 2));
 	mlx->raycast.degrees_per_column = (double)WINDOW_WIDTH / (double)FOV;

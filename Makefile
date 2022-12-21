@@ -6,7 +6,7 @@
 #    By: raho <raho@student.hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/21 18:17:08 by raho              #+#    #+#              #
-#    Updated: 2022/12/20 14:25:39 by raho             ###   ########.fr        #
+#    Updated: 2022/12/21 13:29:05 by raho             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ MLXLINK = -lmlx -framework OpenGL -framework Appkit
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIB) $(INCL)
+$(NAME): $(LIB) $(OBJS) $(INCL)
 	$(CC) $(CFLAGS) $(OBJS) $(LIB) -I $(LIBFTINCL) -I $(MLXINCL) \
 	-I $(INCL) $(MLXLINK) -o $(NAME) -lm
 

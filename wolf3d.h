@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:57:27 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 14:16:52 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 13:31:15 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,26 @@
 # define WINDOW_WIDTH 1200
 # define WINDOW_HEIGHT 900
 # define SQUARE_SIZE 64
-# define FOV 60
+# define FOV 40
 # define RAY_LENGTH 3
-# define TURN_SPEED 3
+# define MOVE_SPEED 3
+# define TURN_SPEED 1
 # define DEGREE	0.0174533 // one degree in radians
-# define LINUX_W 119
-# define LINUX_A 97
-# define LINUX_S 115
-# define LINUX_D 100
-# define LINUX_LEFT 65361
-# define LINUX_UP 65362
-# define LINUX_RIGHT 65363
-# define LINUX_DOWN 65364
-# define LINUX_ENTER 65293
-# define LINUX_ESC 65307
-# define MAC_W 13
-# define MAC_A 0
-# define MAC_S 1
-# define MAC_D 2
-# define MAC_LEFT 123
-# define MAC_UP 126
-# define MAC_RIGHT 124
-# define MAC_DOWN 125
-# define MAC_SHIFT 257
-# define MAC_ENTER 36
-# define MAC_ESC 53
-# define MOSS_GREEN 0x414129
-# define SOFT_SKY_BLUE 0x4C7CAD
 # define NORTH 1
 # define EAST 2
 # define SOUTH 3
 # define WEST 4
+
+# define LEFT 123
+# define RIGHT 124
+# define FORWARD 126
+# define BACK 125
+# define SHIFT 257
+# define ESC 53
+
+# define MOSS_GREEN 0x414129
+# define SOFT_SKY_BLUE 0x4C7CAD
+
 # define EC_OPEN -21
 # define EC_GNL -22
 # define EC_CLOSE -23
@@ -90,6 +79,7 @@ typedef struct s_player
 	double		dir_x;
 	double		dir_y;
 	int			move_speed;
+	int			turn_speed;
 	int			compass;
 	int			left;
 	int			right;

@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 18:24:25 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 13:28:17 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:12:43 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		**ft_arrappint(int **arr, int *app, unsigned int n);
 int		ft_getnbr(char *str);
 double	ft_fabs(double x);
 char	**ft_split_whitespaces(char *str);
-double	ft_rad_to_deg(double radians);
-double	ft_deg_to_rad(double degrees);
+float	ft_rad_to_deg(float radians);
+float	ft_deg_to_rad(float degrees);
 
 #endif

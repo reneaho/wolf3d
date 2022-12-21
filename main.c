@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 21:45:41 by raho              #+#    #+#             */
-/*   Updated: 2022/12/21 14:22:52 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:07:17 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static void	init_structs(t_mlx *mlx)
 	init_textures(mlx);
 	mlx->player.move_speed = MOVE_SPEED;
 	mlx->player.turn_speed = TURN_SPEED;
-	mlx->raycast.dist_to_proj_plane = (double)(WINDOW_WIDTH / 2) / \
+	mlx->raycast.dist_to_proj_plane = (float)(WINDOW_WIDTH / 2) / \
 										tan(ft_deg_to_rad(FOV / 2));
-	mlx->raycast.degrees_per_column = (double)WINDOW_WIDTH / (double)FOV;
-	mlx->raycast.degrees_per_ray = (double)FOV / (double)WINDOW_WIDTH;
+	mlx->raycast.degrees_per_column = (float)WINDOW_WIDTH / (float)FOV;
+	mlx->raycast.degrees_per_ray = (float)FOV / (float)WINDOW_WIDTH;
 }
 
 static void	save_player_pos(t_mlx *mlx, int x, int y)
@@ -48,10 +48,10 @@ static void	save_player_pos(t_mlx *mlx, int x, int y)
 		mlx->player.pos_angle = 270;
 	else
 		mlx->player.pos_angle = 180;
-	mlx->player.pos_x = (double)SQUARE_SIZE * (x + 1) - \
-						((double)SQUARE_SIZE / 2.0);
-	mlx->player.pos_y = (double)SQUARE_SIZE * (y + 1) - \
-						((double)SQUARE_SIZE / 2.0);
+	mlx->player.pos_x = SQUARE_SIZE * (x + 1) - \
+						(SQUARE_SIZE / 2);
+	mlx->player.pos_y = SQUARE_SIZE * (y + 1) - \
+						(SQUARE_SIZE / 2);
 	mlx->player.dir_x = cos(ft_deg_to_rad(mlx->player.pos_angle));
 	mlx->player.dir_y = -sin(ft_deg_to_rad(mlx->player.pos_angle));
 }

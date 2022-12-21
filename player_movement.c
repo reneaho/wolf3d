@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 13:21:42 by raho              #+#    #+#             */
-/*   Updated: 2022/12/21 13:31:34 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:05:11 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ static void	limit_collision(t_player *player, t_map *map)
 		y_offset = -15;
 	else
 		y_offset = 15;
-	player->collision.square_pos_x = player->pos_x / 64.0;
+	player->collision.square_pos_x = player->pos_x / 64;
 	player->collision.square_pos_x_plus_offset = \
-										(player->pos_x + x_offset) / 64.0;
+										(player->pos_x + x_offset) / 64;
 	player->collision.square_pos_x_minus_offset = \
-										(player->pos_x - x_offset) / 64.0;
-	player->collision.square_pos_y = player->pos_y / 64.0;
+										(player->pos_x - x_offset) / 64;
+	player->collision.square_pos_y = player->pos_y / 64;
 	player->collision.square_pos_y_plus_offset = \
-										(player->pos_y + y_offset) / 64.0;
+										(player->pos_y + y_offset) / 64;
 	player->collision.square_pos_y_minus_offset = \
-										(player->pos_y - y_offset) / 64.0;
+										(player->pos_y - y_offset) / 64;
 	update_movement(player, map);
 }
 

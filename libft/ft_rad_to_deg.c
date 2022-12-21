@@ -6,16 +6,16 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 19:49:56 by raho              #+#    #+#             */
-/*   Updated: 2022/12/17 04:13:20 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:12:22 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-double	ft_rad_to_deg(double radians)
+float	ft_rad_to_deg(float radians)
 {
-	double	degrees;
+	float	degrees;
 
-	degrees = radians * 180.0 / (double)M_PI;
+	degrees = radians * 180.0f / (float)M_PI;
 	return (degrees);
 }

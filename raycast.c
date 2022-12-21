@@ -6,32 +6,32 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:35:05 by raho              #+#    #+#             */
-/*   Updated: 2022/12/20 12:39:04 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:12:47 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-double	ray_collision_distance(t_player *player, double coll_x, double coll_y)
+float	ray_collision_distance(t_player *player, t_pointf collision)
 {
-	double	distance;
-	double	temp;
+	float	distance;
+	float	temp;
 
 	temp = ((player->pos_x * player->pos_x) - \
-			(2.0 * player->pos_x * coll_x) + \
-			(coll_x * coll_x)) + \
+			(2.0f * player->pos_x * collision.x) + \
+			(collision.x * collision.x)) + \
 			((player->pos_y * player->pos_y) - \
-			(2.0 * player->pos_y * coll_y) + \
-			(coll_y * coll_y));
-	distance = ft_sqrtd(temp);
+			(2.0f * player->pos_y * collision.y) + \
+			(collision.y * collision.y));
+	distance = ft_sqrtf(temp);
 	return (distance);
 }
 
 void	raycast(t_mlx *mlx)
 {
-	double	hor_coll_dist;
-	double	ver_coll_dist;
-	double	fish_eye_fix_beta;
+	float	hor_coll_dist;
+	float	ver_coll_dist;
+	float	fish_eye_fix_beta;
 
 	hor_coll_dist = 100000;
 	ver_coll_dist = 100000;

@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:57:27 by raho              #+#    #+#             */
-/*   Updated: 2022/12/21 14:23:04 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:09:55 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@
 # include <fcntl.h>
 # include <math.h>
 
-typedef struct s_pointd
+typedef struct s_pointf
 {
-	double	x;
-	double	y;
-}	t_pointd;
+	float	x;
+	float	y;
+}	t_pointf;
 
 typedef struct s_map
 {
@@ -73,11 +73,11 @@ typedef struct s_collision
 typedef struct s_player
 {
 	t_collision	collision;
-	double		pos_angle;
-	double		pos_x;
-	double		pos_y;
-	double		dir_x;
-	double		dir_y;
+	float		pos_angle;
+	float		pos_x;
+	float		pos_y;
+	float		dir_x;
+	float		dir_y;
 	int			move_speed;
 	int			turn_speed;
 	int			compass;
@@ -89,23 +89,23 @@ typedef struct s_player
 
 typedef struct s_raycast
 {
-	double	ray_angle;
-	double	ray_x;
-	double	ray_y;
+	float	ray_angle;
+	float	ray_x;
+	float	ray_y;
 	int		map_x;
 	int		map_y;
-	double	offset_x;
-	double	offset_y;
-	double	dist_to_proj_plane;
-	double	degrees_per_column;
-	double	degrees_per_ray;
-	double	hor_coll_point_x;
-	double	ver_coll_point_y;
-	double	closest_coll_dist;
+	float	offset_x;
+	float	offset_y;
+	float	dist_to_proj_plane;
+	float	degrees_per_column;
+	float	degrees_per_ray;
+	float	hor_coll_point_x;
+	float	ver_coll_point_y;
+	float	closest_coll_dist;
 	int		projected_slice_height;
 	int		wall_texture_xoffset;
 	int		wall_texture_yoffset;
-	double	wall_texture_yincrement;
+	float	wall_texture_yincrement;
 }	t_raycast;
 
 typedef struct s_img
@@ -159,15 +159,15 @@ int		key_release(int key, void *param);
 void	add_movement(t_mlx *mlx);
 
 void	raycast(t_mlx *mlx);
-double	ray_collision_distance(t_player *player, double coll_x, double coll_y);
+float	ray_collision_distance(t_player *player, t_pointf collision);
 
 int		find_hor_coll_point(t_mlx *mlx);
-double	calc_hor_coll_dist(t_mlx *mlx);
-void	save_horizontal(t_mlx *mlx, double hor_coll_dist);
+float	calc_hor_coll_dist(t_mlx *mlx);
+void	save_horizontal(t_mlx *mlx, float hor_coll_dist);
 
 int		find_ver_coll_point(t_mlx *mlx);
-double	calc_ver_coll_dist(t_mlx *mlx);
-void	save_vertical(t_mlx *mlx, double ver_coll_dist);
+float	calc_ver_coll_dist(t_mlx *mlx);
+void	save_vertical(t_mlx *mlx, float ver_coll_dist);
 
 void	draw_column(t_mlx *mlx, int ray_nbr);
 

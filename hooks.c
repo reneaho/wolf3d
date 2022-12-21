@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:02:28 by raho              #+#    #+#             */
-/*   Updated: 2022/12/21 13:31:08 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:07:07 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ int	key_release(int key, void *param)
 	return (0);
 }
 
-static void	fix_circle_angle(double *angle)
+static void	fix_circle_angle(float *angle)
 {
-	if (*angle > 360.0)
-		*angle -= 360.0;
-	else if (*angle < 0.0)
-		*angle += 360.0;
+	if (*angle > 360)
+		*angle -= 360;
+	else if (*angle < 0)
+		*angle += 360;
 }
 
 int	render_all(void *param)

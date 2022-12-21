@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 07:17:22 by raho              #+#    #+#             */
-/*   Updated: 2022/12/21 13:54:50 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:10:28 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 // First check is for when the player is facing north, second one is for south
 int	find_hor_coll_point(t_mlx *mlx)
 {
-	if (mlx->raycast.ray_angle > 0.0 && mlx->raycast.ray_angle < 180.0)
+	if (mlx->raycast.ray_angle > 0 && mlx->raycast.ray_angle < 180)
 	{
-		mlx->raycast.ray_y = (((int)mlx->player.pos_y >> 6) << 6) - 0.0001;
+		mlx->raycast.ray_y = (((int)mlx->player.pos_y >> 6) << 6) - 0.001f;
 		mlx->raycast.ray_x = mlx->player.pos_x + \
 			(mlx->player.pos_y - mlx->raycast.ray_y) / \
 			tan(ft_deg_to_rad(mlx->raycast.ray_angle));
@@ -25,8 +25,8 @@ int	find_hor_coll_point(t_mlx *mlx)
 		mlx->raycast.offset_x = -mlx->raycast.offset_y / \
 			tan(ft_deg_to_rad(mlx->raycast.ray_angle));
 	}
-	else if (mlx->raycast.ray_angle > 180.0 && \
-				mlx->raycast.ray_angle < 360.0)
+	else if (mlx->raycast.ray_angle > 180 && \
+				mlx->raycast.ray_angle < 360)
 	{
 		mlx->raycast.ray_y = (((int)mlx->player.pos_y >> 6) << 6) + SQUARE_SIZE;
 		mlx->raycast.ray_x = mlx->player.pos_x + \
@@ -41,7 +41,7 @@ int	find_hor_coll_point(t_mlx *mlx)
 	return (1);
 }
 
-double	calc_hor_coll_dist(t_mlx *mlx)
+float	calc_hor_coll_dist(t_mlx *mlx)
 {
 	int	index;
 
@@ -56,7 +56,7 @@ double	calc_hor_coll_dist(t_mlx *mlx)
 		{
 			mlx->raycast.hor_coll_point_x = mlx->raycast.ray_x;
 			return (ray_collision_distance(&mlx->player, \
-				mlx->raycast.ray_x, mlx->raycast.ray_y));
+				(t_pointf){mlx->raycast.ray_x, mlx->raycast.ray_y}));
 		}
 		else
 		{
@@ -68,12 +68,12 @@ double	calc_hor_coll_dist(t_mlx *mlx)
 	return (100000);
 }
 
-void	save_horizontal(t_mlx *mlx, double hor_coll_dist)
+void	save_horizontal(t_mlx *mlx, float hor_coll_dist)
 {
 	mlx->raycast.closest_coll_dist = hor_coll_dist;
 	mlx->raycast.wall_texture_xoffset = (int)mlx->raycast.hor_coll_point_x % \
 																SQUARE_SIZE;
-	if (mlx->raycast.ray_angle > 0.0 && mlx->raycast.ray_angle < 180.0)
+	if (mlx->raycast.ray_angle > 0 && mlx->raycast.ray_angle < 180)
 		mlx->player.compass = NORTH;
 	else
 		mlx->player.compass = SOUTH;

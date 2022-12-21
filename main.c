@@ -6,13 +6,13 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 21:45:41 by raho              #+#    #+#             */
-/*   Updated: 2022/12/21 13:33:27 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 14:22:52 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	init_structs(t_mlx *mlx)
+static void	init_structs(t_mlx *mlx)
 {
 	ft_bzero(mlx, sizeof(t_mlx));
 	mlx->mlx_ptr = mlx_init();
@@ -40,7 +40,7 @@ void	init_structs(t_mlx *mlx)
 	mlx->raycast.degrees_per_ray = (double)FOV / (double)WINDOW_WIDTH;
 }
 
-void	save_player_pos(t_mlx *mlx, int x, int y)
+static void	save_player_pos(t_mlx *mlx, int x, int y)
 {
 	if (mlx->map.matrix[y][x + 1] == 0)
 		mlx->player.pos_angle = 0;
@@ -56,7 +56,7 @@ void	save_player_pos(t_mlx *mlx, int x, int y)
 	mlx->player.dir_y = -sin(ft_deg_to_rad(mlx->player.pos_angle));
 }
 
-int	find_player_start_position(t_mlx *mlx)
+static int	find_player_start_position(t_mlx *mlx)
 {
 	int	x;
 	int	y;

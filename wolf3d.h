@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:57:27 by raho              #+#    #+#             */
-/*   Updated: 2022/12/21 13:31:15 by raho             ###   ########.fr       */
+/*   Updated: 2022/12/21 14:23:04 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ typedef struct s_mlx
 }	t_mlx;
 
 void	init_textures(t_mlx *mlx);
-void	init_structs(t_mlx *mlx);
 
 void	read_map(t_map *map, char *filename);
 void	save_map(t_map *map, char *filename);

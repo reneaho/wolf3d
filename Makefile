@@ -6,38 +6,37 @@
 #    By: raho <raho@student.hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/21 18:17:08 by raho              #+#    #+#              #
-#    Updated: 2022/12/21 13:29:05 by raho             ###   ########.fr        #
+#    Updated: 2023/02/21 15:27:55 by raho             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = wolf3d
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
 LIB = libft/libft.a
-LIBFTINCL = libft/
 MLXLIB = /usr/local/lib
 MLXINCL = /usr/local/include
-INCL = wolf3d.h
-SRCS = get_map_dimensions.c draw.c errors.c hooks.c init_textures.c main.c \
+SOURCE = get_map_dimensions.c draw.c errors.c hooks.c init_textures.c main.c \
 		player_movement.c raycast_horizontal.c raycast_vertical.c raycast.c \
 		save_map.c validate_map.c
-OBJS = $(SRCS:.c=.o)
+SRC = $(addprefix source/,$(SOURCE))
+OBJ = $(SRC:.c=.o)
+INCLUDE = -Iinclude -I $(MLXINCL) -Ilibft
 MLXLINK = -lmlx -framework OpenGL -framework Appkit
+CFLAGS = -Wall -Wextra -Werror $(INCLUDE)
 
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(OBJS) $(INCL)
-	$(CC) $(CFLAGS) $(OBJS) $(LIB) -I $(LIBFTINCL) -I $(MLXINCL) \
-	-I $(INCL) $(MLXLINK) -o $(NAME) -lm
+$(NAME): $(LIB) $(OBJ)
+	$(CC) $(OBJ) $(LIB) $(INCLUDE) $(MLXLINK) -o $(NAME)
 
 $(LIB):
 	make -C libft
 
 clean:
 	make -C libft clean
-	rm -f $(OBJS)
+	rm -f $(OBJ)
 
 fclean: clean
 	make -C libft fclean

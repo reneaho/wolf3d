@@ -6,7 +6,7 @@
 /*   By: raho <raho@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:57:27 by raho              #+#    #+#             */
-/*   Updated: 2022/12/21 15:09:55 by raho             ###   ########.fr       */
+/*   Updated: 2023/02/21 15:25:55 by raho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define EC_MALLOC -24
 # define EC_BADMAP -25
 
-# include "libft/libft.h"
+# include "libft.h"
 # include "mlx.h"
 # include <fcntl.h>
 # include <math.h>

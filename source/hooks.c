@@ -25,20 +25,20 @@ int	key_press(int key, void *param)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)param;
-	if (key == LEFT)
+	if (key == MAC_LEFT || key == LINUX_LEFT)
 		mlx->player.left = 1;
-	if (key == RIGHT)
+	if (key == MAC_RIGHT || key == LINUX_RIGHT)
 		mlx->player.right = 1;
-	if (key == FORWARD)
+	if (key == MAC_FORWARD || key == LINUX_FORWARD)
 		mlx->player.forward = 1;
-	if (key == BACK)
+	if (key == MAC_BACK || key == LINUX_BACK)
 		mlx->player.back = 1;
-	if (key == SHIFT)
+	if (key == MAC_SHIFT || key == LINUX_SHIFT)
 	{
 		mlx->player.move_speed = MOVE_SPEED * 2;
 		mlx->player.turn_speed = TURN_SPEED * 2;
 	}
-	if (key == ESC)
+	if (key == MAC_ESC || key == LINUX_ESC)
 		close_program(mlx);
 	return (0);
 }
@@ -48,15 +48,15 @@ int	key_release(int key, void *param)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)param;
-	if (key == LEFT)
+	if (key == MAC_LEFT || key == LINUX_LEFT)
 		mlx->player.left = 0;
-	if (key == RIGHT)
+	if (key == MAC_RIGHT || key == LINUX_RIGHT)
 		mlx->player.right = 0;
-	if (key == FORWARD)
+	if (key == MAC_FORWARD || key == LINUX_FORWARD)
 		mlx->player.forward = 0;
-	if (key == BACK)
+	if (key == MAC_BACK || key == LINUX_BACK)
 		mlx->player.back = 0;
-	if (key == SHIFT)
+	if (key == MAC_SHIFT || key == LINUX_SHIFT)
 	{
 		mlx->player.move_speed = MOVE_SPEED;
 		mlx->player.turn_speed = TURN_SPEED;

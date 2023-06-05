@@ -18,7 +18,7 @@
 # define SQUARE_SIZE 64
 # define FOV 40
 # define RAY_LENGTH 3
-# define MOVE_SPEED 3
+# define MOVE_SPEED 2
 # define TURN_SPEED 1
 # define DEGREE	0.0174533 // one degree in radians
 # define NORTH 1
@@ -26,12 +26,19 @@
 # define SOUTH 3
 # define WEST 4
 
-# define LEFT 123
-# define RIGHT 124
-# define FORWARD 126
-# define BACK 125
-# define SHIFT 257
-# define ESC 53
+# define MAC_LEFT 123
+# define MAC_RIGHT 124
+# define MAC_FORWARD 126
+# define MAC_BACK 125
+# define MAC_SHIFT 257
+# define MAC_ESC 53
+
+# define LINUX_LEFT 65361
+# define LINUX_RIGHT 65363
+# define LINUX_FORWARD 65362
+# define LINUX_BACK 65364
+# define LINUX_SHIFT 65505
+# define LINUX_ESC 65307
 
 # define MOSS_GREEN 0x414129
 # define SOFT_SKY_BLUE 0x4C7CAD

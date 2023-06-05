@@ -12,26 +12,41 @@
 
 NAME = wolf3d
 CC = gcc
-LIB = libft/libft.a
-MLXLIB = /usr/local/lib
-MLXINCL = /usr/local/include
+LIBFT = libft/libft.a
 SOURCE = get_map_dimensions.c draw.c errors.c hooks.c init_textures.c main.c \
 		player_movement.c raycast_horizontal.c raycast_vertical.c raycast.c \
 		save_map.c validate_map.c
 SRC = $(addprefix source/,$(SOURCE))
 OBJ = $(SRC:.c=.o)
-INCLUDE = -Iinclude -I $(MLXINCL) -Ilibft
-MLXLINK = -lmlx -framework OpenGL -framework Appkit
+INCLUDE = -Iinclude -Ilibft
 CFLAGS = -Wall -Wextra -Werror $(INCLUDE)
+INCLUDE= -Isrc -Iinclude -Ilibft -I$(INSTALLED_LIBS_DIR)/include/SDL2/ \
+			-I$(INSTALLED_LIBS_DIR)/include/FMOD/
+CC= gcc
+CFLAGS= $(INCLUDE) -g -finline-functions -O3
+LDFLAGS = -Wl,-rpath $(INSTALLED_LIBS_DIR)/lib
+
+UNAME= $(shell uname)
+ifeq ($(UNAME), Darwin)
+LIBS = $(LIBFT) -lm -Lmlx -lmlx
+MLXLINK = -framework OpenGL -framework Appkit
+else ifeq ($(UNAME), Linux)
+LIBS = $(LIBFT) -lm -Lmlx -lmlx_Linux
+MLXLINK = -lXext -lX11
+else
+warning:
+	@echo "Compilation for platform $(UNAME) not supported."
+	exit 1
+endif
 
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(OBJ)
-	$(CC) $(OBJ) $(LIB) $(INCLUDE) $(MLXLINK) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(OBJ) $(LIBS) $(INCLUDE) $(MLXLINK) -o $(NAME)
 
-$(LIB):
+$(LIBFT):
 	make -C libft
 
 clean:

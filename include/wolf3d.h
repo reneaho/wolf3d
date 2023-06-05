@@ -18,7 +18,7 @@
 # define SQUARE_SIZE 64
 # define FOV 40
 # define RAY_LENGTH 3
-# define MOVE_SPEED 2
+# define MOVE_SPEED 3
 # define TURN_SPEED 1
 # define DEGREE	0.0174533 // one degree in radians
 # define NORTH 1

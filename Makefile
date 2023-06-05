@@ -20,11 +20,6 @@ SRC = $(addprefix source/,$(SOURCE))
 OBJ = $(SRC:.c=.o)
 INCLUDE = -Iinclude -Ilibft
 CFLAGS = -Wall -Wextra -Werror $(INCLUDE)
-INCLUDE= -Isrc -Iinclude -Ilibft -I$(INSTALLED_LIBS_DIR)/include/SDL2/ \
-			-I$(INSTALLED_LIBS_DIR)/include/FMOD/
-CC= gcc
-CFLAGS= $(INCLUDE) -g -finline-functions -O3
-LDFLAGS = -Wl,-rpath $(INSTALLED_LIBS_DIR)/lib
 
 UNAME= $(shell uname)
 ifeq ($(UNAME), Darwin)

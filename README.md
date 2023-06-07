@@ -1,5 +1,5 @@
 # wolf3d - raycast renderer
-The program takes a 2D array map as an argument and renders it in 3D with raycasting
+The program takes a 2D array map as an argument and renders it in 3D with raycasting\
 Movement: Arrow keys\
 Run: Left Shift\
 

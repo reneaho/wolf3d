@@ -3,7 +3,7 @@ The program takes a 2D array map as an argument and renders it in 3D with raycas
 Movement: Arrow keys\
 Run: Left Shift
 
-## how to run
+## How to run
 make\
 ./wolf3d maps/<map's_name>
 
